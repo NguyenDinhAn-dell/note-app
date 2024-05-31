@@ -120,7 +120,7 @@ export default function NoteList() {
                     <div
                         dangerouslySetInnerHTML={{
                           __html: `${
-                            content ? content.substring(0, 30) : "Empty"
+                            content ? content : "Empty"
                           }`,
                         }}
                       ></div>

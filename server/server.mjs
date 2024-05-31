@@ -16,7 +16,7 @@ const app = express();
 const httpServer = http.createServer(app);
 
 // Connect to DB
-const URL = `mongodb+srv://nekodev:${process.env.DB_PASSWORD}@cluster0.uzc8dci.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.uzc8dci.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const PORT = process.env.PORT || 4000;
 const server = new ApolloServer({
   typeDefs,
