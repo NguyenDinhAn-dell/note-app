@@ -1,4 +1,4 @@
-import { Button, Input, Modal } from "antd";
+import { Input, Modal, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { addNewFolder } from "../utils/folderUtils";
 import { useSearchParams, useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ export default function NewFolder() {
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [messageApi, contextHolder] = message.useMessage();
   const showModal = () => {
     setSearchParams({ popup: "add-folder" });
     setIsModalOpen(true);
@@ -22,6 +22,15 @@ export default function NewFolder() {
     setIsModalOpen(false);
     setNewFolderName("");
     navigate(-1);
+    messageApi.open({
+      type: "success",
+      content: `Add new folder success!`,
+    });
+  };
+  const handleKeyPress = async (e) => {
+    if (e.key === "Enter") {
+      await handleOk();
+    }
   };
 
   const handleCancel = () => {
@@ -45,7 +54,7 @@ export default function NewFolder() {
   return (
     <>
       <FolderAddOutlined title="add-folder" onClick={showModal} />
-
+      {contextHolder}
       <Modal
         title="Add new folder"
         open={isModalOpen}
@@ -56,6 +65,7 @@ export default function NewFolder() {
           id="name"
           value={newFolderName}
           onChange={handleNewFolderNameChange}
+          onKeyPress={handleKeyPress}
         />
       </Modal>
     </>

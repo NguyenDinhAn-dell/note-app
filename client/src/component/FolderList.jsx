@@ -1,4 +1,13 @@
-import { Button, Card, List, Typography, Modal, Form, Input } from "antd";
+import {
+  Button,
+  Card,
+  List,
+  Typography,
+  Modal,
+  Form,
+  Input,
+  message,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import NewFolder from "./NewFolder";
@@ -6,8 +15,6 @@ import { deleteFolder, updateFolder } from "../utils/folderUtils";
 import {
   DeleteOutlined,
   EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
 } from "@ant-design/icons";
 
 export default function FolderList({
@@ -21,6 +28,7 @@ export default function FolderList({
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [currentFolder, setCurrentFolder] = useState(null);
   const [form] = Form.useForm();
+  const [messageApi, contextHolder] = message.useMessage();
 
   const showDeleteConfirm = (id) => {
     Modal.confirm({
@@ -31,6 +39,10 @@ export default function FolderList({
       cancelText: "No",
       onOk() {
         handleDeleteFolder(id);
+        messageApi.open({
+          type: "success",
+          content: `Deleted folder!`,
+        });
       },
       onCancel() {
         console.log("Cancel");
@@ -101,6 +113,7 @@ export default function FolderList({
           <NewFolder />
         </div>
         <div style={{ position: "relative", zIndex: 0 }}>
+          {contextHolder}
           <List
             bordered
             dataSource={folders.map(({ id, name }) => (
@@ -118,17 +131,22 @@ export default function FolderList({
                     alignItems: "center",
                   }}
                   actions={[
-                    <Button  icon={<EditOutlined
-                      key="edit"
-                      onClick={() => handleEditFolder({ id, name })}
-                    />}/>
-                    ,
-                    <Button  icon={ <DeleteOutlined
-                
-                      onClick={() => showDeleteConfirm(id)}
-                      key="ellipsis"
-                    />}/>
-                   
+                    <Button
+                      icon={
+                        <EditOutlined
+                          key="edit"
+                          onClick={() => handleEditFolder({ id, name })}
+                        />
+                      }
+                    />,
+                    <Button
+                      icon={
+                        <DeleteOutlined
+                          onClick={() => showDeleteConfirm(id)}
+                          key="ellipsis"
+                        />
+                      }
+                    />,
                   ]}
                 >
                   {name}

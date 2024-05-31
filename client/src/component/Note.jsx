@@ -42,7 +42,7 @@ export default function Note() {
     }
     messageApi.open({
       type: "success",
-      content: `Deleted note success`,
+      content: `Saved note!`,
     });
   };
 

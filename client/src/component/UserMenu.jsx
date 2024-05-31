@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
-import { Avatar, Dropdown, Menu, Space } from "antd";
+import { Avatar, Dropdown, Space } from "antd";
 import { DownOutlined, LogoutOutlined } from "@ant-design/icons";
 
 export default function UserMenu() {
@@ -22,13 +22,13 @@ export default function UserMenu() {
 
   return (
     <Dropdown menu={{ items }} trigger={["click"]}>
-      <a onClick={(e) => e.preventDefault()}>
+      <div onClick={(e) => e.preventDefault()} style={{ cursor: "pointer" }}>
         <Space>
           <Avatar src={photoURL}></Avatar>
           {displayName}
           <DownOutlined />
         </Space>
-      </a>
+      </div>
     </Dropdown>
   );
 }
